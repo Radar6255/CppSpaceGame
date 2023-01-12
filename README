@@ -1,0 +1,6 @@
+## C++ Terminal Space Game
+This is a small project that I am making to get some experience using C++.
+
+Currently using ncurses for output.
+
+I have been developing and testing on Ubuntu through WSL on Windows 10.
