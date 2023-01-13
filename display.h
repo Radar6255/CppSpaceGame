@@ -12,6 +12,7 @@ public:
 	void drawFrame();
 	Display(World*);
 	void init();
+	void handleKey(int ch);
 private:
 	World* world;
 	WINDOW* win;
