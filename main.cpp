@@ -6,7 +6,7 @@
 #include "world.h"
 #include "display.h"
 
-void gameLoop(Display disp){
+void gameLoop(Display* disp){
 	// Got help for this from http://jbwyatt.com/ncurses.html#input which is very useful for ncurses programming
 	int ch;
 	while(true){
@@ -14,11 +14,18 @@ void gameLoop(Display disp){
 		if ((ch = getch()) == ERR){
 			continue;
 		} else {
-			disp.handleKey(ch);
+			// Trying to find if someone hit escape
+			if (ch == 27){
+				if ((ch = getch()) == ERR){
+					break;
+				}
+			}
+
+			disp->handleKey(ch);
 		}
 
 		// Then we need to render a new frame... Actually we can probably get away with only doing this after an update or key press
-		disp.drawFrame();
+		disp->drawFrame();
 	}
 }
 
@@ -30,9 +37,7 @@ int main(){
 	curDisplay.init();
 
 	curDisplay.drawFrame();
-	gameLoop(curDisplay);
-
-	sleep(5);
+	gameLoop(&curDisplay);
 
 	endwin();
 	return 0;

@@ -70,15 +70,23 @@ void Display::drawFrame(){
 }
 
 void Display::init(){
-	this->curScreenDim[0] = 20;
-	this->curScreenDim[1] = 11.25;
-
 	initscr();
 	cbreak();
 	noecho();
+	nodelay(stdscr, TRUE);
 
 	resizeHandler(0);
-	//this->win = newwin(Display::windowHeight, Display::windowWidth, 1, 1);
+
+	this->curScreenDim[0] = 20;
+	this->curScreenDim[1] = 11.25;
+
+	// Need to generate the ship that the display is following
+	this->player = std::unique_ptr<Ship>(this->world->placeShip());
+	std::cout << "Finished generating ship\n";
 
 	signal(SIGWINCH, this->resizeHandler);
+}
+
+Display::~Display(){
+	std::cout << "Deconstucting display\n";
 }
