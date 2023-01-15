@@ -6,6 +6,10 @@ float* Ship::getCoords(){
 	return this->coords;
 }
 
+float Ship::getRotation(){
+	return this->rot;
+}
+
 void Ship::handleKey(int ch){
 	switch(ch){
 	case 'w':

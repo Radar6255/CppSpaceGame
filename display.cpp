@@ -32,6 +32,9 @@ void Display::handleKey(int ch){
 			this->curScreenDim[0] = this->curScreenDim[0] * 1.05;
 			this->curScreenDim[1] = this->curScreenDim[1] * 1.05;
 			break;
+		default:
+			this->player->handleKey(ch);
+			break;
 	}
 }
 
@@ -46,7 +49,13 @@ void Display::drawFrame(){
 		float boundWidth = boundSize / this->curScreenDim[0] / 2;
 		float boundHeight = boundSize / this->curScreenDim[1] / 2;
 
-		float* coords = asteroids[i]->getCoords();
+		// Need to clone the coords and translate them according to the player
+		float* absCoords = asteroids[i]->getCoords();
+		float tmpCoords[2] = {absCoords[0] + this->player->getCoords()[0], absCoords[1] + this->player->getCoords()[0]};
+
+		// After we have translated of the player position we need to rotate based on the player rotation
+		float rot = this->player->getRotation();
+		float coords[2] = {tmpCoords[0]*cos(rot) - tmpCoords[1]*sin(rot), tmpCoords[0]*sin(rot) + tmpCoords[1]*cos(rot)};
 
 		for (float x = -boundWidth; x < boundWidth; x += (float) this->curScreenDim[0] / Display::windowWidth){
 			// Could change to using this if performance is bad or something
@@ -82,7 +91,8 @@ void Display::init(){
 
 	// Need to generate the ship that the display is following
 	this->player = std::unique_ptr<Ship>(this->world->placeShip());
-	std::cout << "Finished generating ship\n";
+
+	//std::cout << "Finished generating ship\n";
 
 	signal(SIGWINCH, this->resizeHandler);
 }
