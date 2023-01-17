@@ -32,7 +32,7 @@ Ship* World::placeShip(){
 	// TODO: Need to check to see if the place that we are putting the ship is not colliding with anything
 	std::srand((unsigned) time(NULL));
 
-	return new Ship(randFloat(-WORLD_W / 2, WORLD_W), randFloat(-WORLD_H / 2, WORLD_H), ((float) std::rand() / RAND_MAX) * M_PI);
+	return new Ship(randFloat(-WORLD_W / 2, WORLD_W), randFloat(-WORLD_H / 2, WORLD_H), ((float) std::rand() / RAND_MAX) * 2 * M_PI);
 }
 
 World::~World(){

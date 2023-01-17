@@ -6,6 +6,7 @@
 #include "world.h"
 #include "asteroid.h"
 #include "display.h"
+#include "general.h"
 
 Display::Display(World* world){
 	this->world = world;
@@ -51,11 +52,20 @@ void Display::drawFrame(){
 
 		// Need to clone the coords and translate them according to the player
 		float* absCoords = asteroids[i]->getCoords();
-		float tmpCoords[2] = {absCoords[0] + this->player->getCoords()[0], absCoords[1] + this->player->getCoords()[0]};
+		//float screenCenter[2] = {((float) this->curScreenDim[0] / 2), ((float) this->curScreenDim[1] / 2)};
+		float coords[2] = {absCoords[0] + this->player->getCoords()[0], absCoords[1] + this->player->getCoords()[1]};
+		
 
 		// After we have translated of the player position we need to rotate based on the player rotation
 		float rot = this->player->getRotation();
-		float coords[2] = {tmpCoords[0]*cos(rot) - tmpCoords[1]*sin(rot), tmpCoords[0]*sin(rot) + tmpCoords[1]*cos(rot)};
+		//float coords[2] = {tmpCoords[0]*cos(rot) - tmpCoords[1]*sin(rot), tmpCoords[0]*sin(rot) + tmpCoords[1]*cos(rot)};
+		general::rotate2dCoord(coords, rot);
+
+		// Need to translate the coordinates to get us to the middle of the screen
+		coords[0] = coords[0] + ((float) this->curScreenDim[0] / 2);
+		coords[1] = coords[1] + ((float) this->curScreenDim[1] / 2);
+
+		mvaddch((int) round((float) Display::windowHeight / 2), (int) round((float) Display::windowWidth / 2), 'O');
 
 		for (float x = -boundWidth; x < boundWidth; x += (float) this->curScreenDim[0] / Display::windowWidth){
 			// Could change to using this if performance is bad or something
@@ -65,8 +75,8 @@ void Display::drawFrame(){
 				// First we need to check to see if the point we have is actually a part of the asteroid
 				if (sqrt(pow(x, 2) + pow(y, 2)) < asteroids[i]->getRadius(0)){
 					int relCoords[2] = {
-						(int) round(Display::windowWidth * ((coords[0] + x + 10) / this->curScreenDim[0])),
-						(int) round(Display::windowHeight * ((coords[1] + y + 10) / this->curScreenDim[1]))
+						(int) round(Display::windowWidth * ((coords[0] + x) / this->curScreenDim[0])),
+						(int) round(Display::windowHeight * ((coords[1] + y) / this->curScreenDim[1]))
 					};
 
 					mvaddch(relCoords[1], relCoords[0], 'X');

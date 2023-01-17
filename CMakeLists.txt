@@ -9,6 +9,6 @@ include_directories(${CURSES_INCLUDE_DIR})
 
 add_compile_options(-Wall -Wextra -pedantic)
 
-add_executable(main main.cpp world.cpp asteroid.cpp display.cpp ship.cpp)
+add_executable(main main.cpp world.cpp asteroid.cpp display.cpp ship.cpp general.cpp)
 
 target_link_libraries(main ${CURSES_LIBRARIES})
