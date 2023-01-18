@@ -32,7 +32,8 @@ Ship* World::placeShip(){
 	// TODO: Need to check to see if the place that we are putting the ship is not colliding with anything
 	std::srand((unsigned) time(NULL));
 
-	return new Ship(randFloat(-WORLD_W / 2, WORLD_W), randFloat(-WORLD_H / 2, WORLD_H), ((float) std::rand() / RAND_MAX) * 2 * M_PI);
+	this->ships.push_back(new Ship(randFloat(-WORLD_W / 2, WORLD_W), randFloat(-WORLD_H / 2, WORLD_H), ((float) std::rand() / RAND_MAX) * 2 * M_PI));
+	return this->ships.back();
 }
 
 World::~World(){
@@ -45,4 +46,10 @@ World::~World(){
 Asteroid** World::getAsteroids(int* size){
 	*size = this->numAsteroids;
 	return this->asteroids;
+}
+
+void World::tick(){
+	for(std::vector<Ship*>::iterator ship = this->ships.begin(); ship != this->ships.end(); ship++){
+		(*ship)->tick();
+	}
 }

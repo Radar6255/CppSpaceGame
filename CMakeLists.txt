@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED 17)
 find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIR})
 
-add_compile_options(-Wall -Wextra -pedantic)
+add_compile_options(-Wall -Wextra -pedantic -g)
 
 add_executable(main main.cpp world.cpp asteroid.cpp display.cpp ship.cpp general.cpp)
 

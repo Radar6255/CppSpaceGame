@@ -1,5 +1,7 @@
 #ifndef WORLD_HEADER
 #define WORLD_HEADER
+#include <vector>
+
 #include "asteroid.h"
 #include "ship.h"
 
@@ -18,8 +20,11 @@ public:
 
 	// Cleans up asteroids
 	~World();
+
+	void tick();
 private:
 	Asteroid** asteroids;
 	int numAsteroids;
+	std::vector<Ship*> ships;
 };
 #endif
