@@ -47,18 +47,15 @@ void Display::drawFrame(){
 	for (int i = 0; i < numAsteroids; i++){
 		// This is the max radius of the asteroid in window coordinates
 		float boundSize = asteroids[i]->getBoundingSize();
-		float boundWidth = boundSize / this->curScreenDim[0] / 2;
-		float boundHeight = boundSize / this->curScreenDim[1] / 2;
+		float boundWidth = boundSize / this->curScreenDim[0];
+		float boundHeight = boundSize / this->curScreenDim[1];
 
 		// Need to clone the coords and translate them according to the player
 		float* absCoords = asteroids[i]->getCoords();
-		//float screenCenter[2] = {((float) this->curScreenDim[0] / 2), ((float) this->curScreenDim[1] / 2)};
 		float coords[2] = {absCoords[0] + this->player->getCoords()[0], absCoords[1] + this->player->getCoords()[1]};
 		
-
 		// After we have translated of the player position we need to rotate based on the player rotation
 		float rot = this->player->getRotation();
-		//float coords[2] = {tmpCoords[0]*cos(rot) - tmpCoords[1]*sin(rot), tmpCoords[0]*sin(rot) + tmpCoords[1]*cos(rot)};
 		general::rotate2dCoord(coords, rot);
 
 		// Need to translate the coordinates to get us to the middle of the screen
@@ -73,7 +70,8 @@ void Display::drawFrame(){
 			//waddch(this->win, 'X');
 			for (float y = -boundHeight; y < boundHeight; y += (float) this->curScreenDim[1] / Display::windowHeight){
 				// First we need to check to see if the point we have is actually a part of the asteroid
-				if (sqrt(pow(x, 2) + pow(y, 2)) < asteroids[i]->getRadius(0)){
+				//std::cout << sqrt(pow(x, 2) + pow(y, 2)) << " ";
+				if (sqrt(pow(x * this->curScreenDim[0], 2) + pow(y * this->curScreenDim[1], 2)) < asteroids[i]->getRadius(0)){
 					int relCoords[2] = {
 						(int) round(Display::windowWidth * ((coords[0] + x) / this->curScreenDim[0])),
 						(int) round(Display::windowHeight * ((coords[1] + y) / this->curScreenDim[1]))
