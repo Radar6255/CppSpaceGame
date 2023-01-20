@@ -64,14 +64,17 @@ void Display::drawFrame(){
 
 		mvaddch((int) round((float) Display::windowHeight / 2), (int) round((float) Display::windowWidth / 2), 'O');
 
-		for (float x = -boundWidth; x < boundWidth; x += (float) this->curScreenDim[0] / Display::windowWidth){
+		float xCharSize = (float) this->curScreenDim[0] / Display::windowWidth;
+		float yCharSize = (float) this->curScreenDim[1] / Display::windowHeight;
+
+		for (float x = -boundWidth; x < boundWidth; x += xCharSize){
 			// Could change to using this if performance is bad or something
 			//wmove(stdscr, y, x);
 			//waddch(this->win, 'X');
-			for (float y = -boundHeight; y < boundHeight; y += (float) this->curScreenDim[1] / Display::windowHeight){
+			for (float y = -boundHeight; y < boundHeight; y += yCharSize){
 				// First we need to check to see if the point we have is actually a part of the asteroid
 				//std::cout << sqrt(pow(x, 2) + pow(y, 2)) << " ";
-				if (sqrt(pow(x * this->curScreenDim[0], 2) + pow(y * this->curScreenDim[1], 2)) < asteroids[i]->getRadius(0)){
+				if (sqrt(pow((x + xCharSize / 2) * this->curScreenDim[0], 2) + pow((y + yCharSize / 2) * this->curScreenDim[1], 2)) < asteroids[i]->getRadius(0)){
 					int relCoords[2] = {
 						(int) round(Display::windowWidth * ((coords[0] + x) / this->curScreenDim[0])),
 						(int) round(Display::windowHeight * ((coords[1] + y) / this->curScreenDim[1]))

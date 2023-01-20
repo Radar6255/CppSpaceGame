@@ -4,11 +4,13 @@
 
 #include "asteroid.h"
 #include "ship.h"
+#include "updateable.h"
 
 #define WORLD_W 20
 #define WORLD_H 20
 
-class World{
+class World: public Updateable{
+//class World{
 public:
 	// Function to initalize the world with a specific number of asteroids
 	void init(int numAsteroids);

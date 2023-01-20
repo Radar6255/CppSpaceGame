@@ -1,7 +1,10 @@
 #ifndef ASTEROID_H
 #define ASTEROID_H
 
-class Asteroid{
+#include "updateable.h"
+
+class Asteroid: public Updateable{
+//class Asteroid{
 public:
 	Asteroid(float x, float y, int seed);
 	~Asteroid();
@@ -9,6 +12,8 @@ public:
 	float* getCoords();
 	float getBoundingSize();
 	float getRadius(float theta);
+
+	void tick();
 private:
 	float coords[2];
 	float rotation;

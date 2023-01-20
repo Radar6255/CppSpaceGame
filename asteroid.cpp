@@ -25,6 +25,11 @@ Asteroid::Asteroid(float x, float y, int seed){
 	this->boundSize = (std::rand() % 7) + 3;
 }
 
+void Asteroid::tick(){
+	// TODO Need to apply velocity here
+	std::cout << "Test";
+}
+
 float Asteroid::getRadius(float theta){
 	return this->boundSize;
 }
