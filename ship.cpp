@@ -31,11 +31,17 @@ void Ship::handleKey(int ch){
 		//offset[0] = -1;
 		curSpeed = sqrt(pow(this->velocity[0], 2) + pow(this->velocity[1], 2));
 		//general::rotate2dCoord(offset, this->rot);
+		//this->velocity[0] -= this->acceleration * 0.75 / curSpeed * this->velocity[0];
+		//this->velocity[1] -= this->acceleration * 0.75 / curSpeed * this->velocity[1];
 
-		//this->coords[0] += offset[0];
-		//this->coords[1] += offset[1];
-		this->velocity[0] -= this->acceleration * 0.75 / curSpeed * this->velocity[0];
-		this->velocity[1] -= this->acceleration * 0.75 / curSpeed * this->velocity[1];
+		if (curSpeed < this->acceleration * 0.75){
+			this->velocity[0] = 0;
+			this->velocity[1] = 0;
+			break;
+		}
+
+		this->velocity[0] -= this->acceleration * 0.75 * (this->velocity[0] / curSpeed);
+		this->velocity[1] -= this->acceleration * 0.75 * (this->velocity[1] / curSpeed);
 		break;
 	case 'a':
 		this->rot += 0.1;

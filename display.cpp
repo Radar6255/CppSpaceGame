@@ -59,8 +59,12 @@ void Display::drawFrame(){
 		general::rotate2dCoord(coords, rot);
 
 		// Need to translate the coordinates to get us to the middle of the screen
-		coords[0] = coords[0] + ((float) this->curScreenDim[0] / 2);
-		coords[1] = coords[1] + ((float) this->curScreenDim[1] / 2);
+		//coords[0] = coords[0] + ((float) this->curScreenDim[0] / 2);
+		//coords[1] = coords[1] + ((float) this->curScreenDim[1] / 2);
+
+		coords[0] = coords[0] * (Display::windowWidth / this->curScreenDim[0]) + ((float) this->curScreenDim[0] / 2);
+		coords[1] = coords[1] * (Display::windowHeight / this->curScreenDim[1]) + ((float) this->curScreenDim[1] / 2);
+		//coords[1] = coords[1] / ((float) this->curScreenDim[1] / 2);
 
 		mvaddch((int) round((float) Display::windowHeight / 2), (int) round((float) Display::windowWidth / 2), 'O');
 
