@@ -22,7 +22,7 @@ Asteroid::Asteroid(float x, float y, int seed){
 	std::srand(seed);
 
 	// TODO Get this to be accurate
-	this->boundSize = (std::rand() % 7) + 3;
+	this->boundSize = (std::rand() % 3) + 1;
 }
 
 void Asteroid::tick(){

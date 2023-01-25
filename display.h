@@ -20,6 +20,8 @@ public:
 	void init();
 	void handleKey(int ch);
 private:
+	void toDisplayCoords(float* input);
+
 	World* world;
 	WINDOW* win;
 	float curScreenDim[2];
