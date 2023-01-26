@@ -9,3 +9,7 @@ void general::rotate2dCoord(float* coords, float rot){
 	coords[0] = tmp[0];
 	coords[1] = tmp[1];
 }
+
+float general::pointDistance(float* c1, float* c2){
+	return sqrt(pow(c1[0] - c2[0], 2) + pow(c1[1] - c2[1], 2));
+}

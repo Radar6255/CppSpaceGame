@@ -16,7 +16,7 @@ public:
 	void init(int numAsteroids);
 
 	// Get the asteroids currently in the world
-	Asteroid** getAsteroids(int*);
+	std::vector<Asteroid> getAsteroids();
 
 	Ship* placeShip();
 
@@ -25,7 +25,7 @@ public:
 
 	void tick();
 private:
-	Asteroid** asteroids;
+	std::vector<Asteroid> asteroids;
 	int numAsteroids;
 	std::vector<Ship*> ships;
 };

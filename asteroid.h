@@ -6,7 +6,7 @@
 class Asteroid: public Updateable{
 //class Asteroid{
 public:
-	Asteroid(float x, float y, int seed);
+	Asteroid(float x, float y, float maxRadius, int seed);
 	~Asteroid();
 
 	float* getCoords();

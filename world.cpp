@@ -8,6 +8,7 @@
 #include "world.h"
 #include "asteroid.h"
 #include "ship.h"
+#include "general.h"
 
 float randFloat(int min, int range){
 	return ((float) std::rand() / RAND_MAX) * range + min;
@@ -15,7 +16,6 @@ float randFloat(int min, int range){
 
 void World::init(int numAsteroids){
 	this->numAsteroids = numAsteroids;
-	this->asteroids = new Asteroid*[numAsteroids];
 
 	std::srand((unsigned) time(NULL));
 
@@ -23,8 +23,27 @@ void World::init(int numAsteroids){
 	// TODO: Make sure that these don't overlap or collide with each other...
 	// Currently we can't do this but in the future it might be nice to do
 	for (int i = 0; i < numAsteroids; i++){
-		this->asteroids[i] = new Asteroid(randFloat(-WORLD_W / 2, WORLD_W), randFloat(-WORLD_H / 2, WORLD_H), std::rand());
-		//std::cout << "X: " << this->asteroids[i].getCoords()[0] << "\n";
+		while(true){
+			float x = randFloat(-WORLD_W / 2, WORLD_W);
+			float y = randFloat(-WORLD_H / 2, WORLD_H);
+			float coords[2] = {x, y};
+			int radius = std::rand() % 4;
+
+			bool collision = false;
+			for(std::vector<Asteroid>::iterator asteroid = this->asteroids.begin(); asteroid != this->asteroids.end(); asteroid++){
+				if (radius + asteroid->getBoundingSize() > general::pointDistance(coords, asteroid->getCoords())){
+					collision = true;
+					break;
+				}
+			}
+			if (collision){
+				continue;
+			}
+			//this->asteroids.push_back(new Asteroid(x, y, radius, std::rand()));
+			this->asteroids.push_back(Asteroid(x, y, radius, std::rand()));
+			//std::cout << "X: " << this->asteroids[i].getCoords()[0] << "\n";
+			break;
+		}
 	}
 }
 
@@ -37,14 +56,17 @@ Ship* World::placeShip(){
 }
 
 World::~World(){
-	for (int i = 0; i < this->numAsteroids; i++){
-		delete this->asteroids[i];
+	this->asteroids.clear();
+
+	/*
+	for(std::vector<Ship*>::iterator ship = this->ships.begin(); ship != this->ships.end(); ship++){
+		delete *ship;
 	}
-	delete[] this->asteroids;
+	this->ships.clear();
+	*/
 }
 
-Asteroid** World::getAsteroids(int* size){
-	*size = this->numAsteroids;
+std::vector<Asteroid> World::getAsteroids(){
 	return this->asteroids;
 }
 

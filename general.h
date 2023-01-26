@@ -3,6 +3,7 @@
 
 namespace general{
 	void rotate2dCoord(float* coords, float rot);
+	float pointDistance(float* c1, float* c2);
 }
 
 #endif

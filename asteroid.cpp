@@ -12,7 +12,7 @@ float Asteroid::getBoundingSize(){
 	return this->boundSize;
 }
 
-Asteroid::Asteroid(float x, float y, int seed){
+Asteroid::Asteroid(float x, float y, float maxRadius, int seed){
 	this->coords[0] = x;
 	this->coords[1] = y;
 	this->seed = seed;
@@ -21,8 +21,7 @@ Asteroid::Asteroid(float x, float y, int seed){
 	// Should generate the array used for perlin noise in the constructor so we don't need to use the seed again
 	std::srand(seed);
 
-	// TODO Get this to be accurate
-	this->boundSize = (std::rand() % 3) + 1;
+	this->boundSize = maxRadius;
 }
 
 void Asteroid::tick(){
@@ -30,6 +29,7 @@ void Asteroid::tick(){
 	std::cout << "Test";
 }
 
+// TODO Make this use 1D perlin noise to generate smooth but varied shaped asteroids
 float Asteroid::getRadius(float theta){
 	return this->boundSize;
 }
