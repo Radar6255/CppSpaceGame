@@ -20,7 +20,6 @@ void World::init(int numAsteroids){
 	std::srand((unsigned) time(NULL));
 
 	// Need to generate and store the asteroids
-	// TODO: Make sure that these don't overlap or collide with each other...
 	// Currently we can't do this but in the future it might be nice to do
 	for (int i = 0; i < numAsteroids; i++){
 		while(true){
@@ -41,6 +40,7 @@ void World::init(int numAsteroids){
 			}
 			//this->asteroids.push_back(new Asteroid(x, y, radius, std::rand()));
 			this->asteroids.push_back(Asteroid(x, y, radius, std::rand()));
+			this->updates.push_back(&this->asteroids[this->asteroids.size() - 1]);
 			//std::cout << "X: " << this->asteroids[i].getCoords()[0] << "\n";
 			break;
 		}
@@ -73,5 +73,9 @@ std::vector<Asteroid> World::getAsteroids(){
 void World::tick(){
 	for(std::vector<Ship*>::iterator ship = this->ships.begin(); ship != this->ships.end(); ship++){
 		(*ship)->tick();
+	}
+
+	for(Updateable* update: this->updates){
+		update->tick();
 	}
 }

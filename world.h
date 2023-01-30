@@ -28,5 +28,6 @@ private:
 	std::vector<Asteroid> asteroids;
 	int numAsteroids;
 	std::vector<Ship*> ships;
+	std::vector<Updateable*> updates;
 };
 #endif
