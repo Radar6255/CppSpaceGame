@@ -29,7 +29,8 @@ void World::init(int numAsteroids){
 			int radius = std::rand() % 4;
 
 			bool collision = false;
-			for(std::vector<Asteroid>::iterator asteroid = this->asteroids.begin(); asteroid != this->asteroids.end(); asteroid++){
+			//for(std::vector<Asteroid>::iterator asteroid = this->asteroids.begin(); asteroid != this->asteroids.end(); asteroid++){
+			for(Asteroid* asteroid: this->asteroids){
 				if (radius + asteroid->getBoundingSize() > general::pointDistance(coords, asteroid->getCoords())){
 					collision = true;
 					break;
@@ -38,9 +39,9 @@ void World::init(int numAsteroids){
 			if (collision){
 				continue;
 			}
-			//this->asteroids.push_back(new Asteroid(x, y, radius, std::rand()));
-			this->asteroids.push_back(Asteroid(x, y, radius, std::rand()));
-			this->updates.push_back(&this->asteroids[this->asteroids.size() - 1]);
+			this->asteroids.push_back(new Asteroid(x, y, radius, std::rand()));
+			//this->asteroids.push_back(Asteroid(x, y, radius, std::rand()));
+			this->updates.push_back(this->asteroids[this->asteroids.size() - 1]);
 			//std::cout << "X: " << this->asteroids[i].getCoords()[0] << "\n";
 			break;
 		}
@@ -56,6 +57,9 @@ Ship* World::placeShip(){
 }
 
 World::~World(){
+	for(Asteroid* asteroid: this->asteroids){
+		delete asteroid;
+	}
 	this->asteroids.clear();
 
 	/*
@@ -66,7 +70,7 @@ World::~World(){
 	*/
 }
 
-std::vector<Asteroid> World::getAsteroids(){
+std::vector<Asteroid*> World::getAsteroids(){
 	return this->asteroids;
 }
 

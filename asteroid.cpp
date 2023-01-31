@@ -26,7 +26,7 @@ Asteroid::Asteroid(float x, float y, float maxRadius, int seed){
 
 void Asteroid::tick(){
 	// TODO Need to apply velocity here
-	std::cout << "Test";
+	//std::cout << "Test";
 }
 
 // TODO Make this use 1D perlin noise to generate smooth but varied shaped asteroids
