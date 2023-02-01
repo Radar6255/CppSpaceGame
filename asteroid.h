@@ -10,12 +10,17 @@ public:
 	~Asteroid();
 
 	float* getCoords();
+	float* getVelocity();
 	float getBoundingSize();
 	float getRadius(float theta);
+
+	bool checkCollision(Asteroid* asteroid);
 
 	void tick();
 private:
 	float coords[2];
+	float velocity[2];
+
 	float rotation;
 	int seed;
 	float boundSize;

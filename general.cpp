@@ -13,3 +13,15 @@ void general::rotate2dCoord(float* coords, float rot){
 float general::pointDistance(float* c1, float* c2){
 	return sqrt(pow(c1[0] - c2[0], 2) + pow(c1[1] - c2[1], 2));
 }
+
+void general::vectorNorm(float* in, float* out){
+	out[0] = -in[1];
+	out[1] = in[0];
+}
+
+void general::makeUnitVector(float* in, float* out){
+	float mag = pointDistance(in, in);
+
+	out[0] = in[0] / mag;
+	out[1] = in[1] / mag;
+}

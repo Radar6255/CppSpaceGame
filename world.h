@@ -25,6 +25,8 @@ public:
 
 	void tick();
 private:
+	void doCollisions();
+
 	std::vector<Asteroid*> asteroids;
 	int numAsteroids;
 	std::vector<Ship*> ships;

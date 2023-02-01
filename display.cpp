@@ -48,10 +48,9 @@ void Display::drawFrame(){
 	int skippedDraws = 0;
 
 	werase(stdscr);
-	int numAsteroids;
 	std::vector<Asteroid*> asteroids = this->world->getAsteroids();
 
-	for (int i = 0; i < asteroids.size(); i++){
+	for (unsigned long i = 0; i < asteroids.size(); i++){
 		// This is the max radius of the asteroid in window coordinates
 		float boundSize = asteroids[i]->getBoundingSize();
 		float boundWidth = boundSize * (Display::windowWidth / (2 * this->curScreenDim[0]));

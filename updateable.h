@@ -6,7 +6,7 @@ public:
 	//virtual Updateable();
 	virtual void tick() = 0;
 	//~Updateable() = default;
-	//virtual ~Updateable() = default;
+	virtual ~Updateable() = default;
 };
 
 //Updateable::~Updateable(){}
