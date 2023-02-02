@@ -25,3 +25,10 @@ void general::makeUnitVector(float* in, float* out){
 	out[0] = in[0] / mag;
 	out[1] = in[1] / mag;
 }
+
+void general::solveSystem(float a, float b, float c, float out[2]){
+	float rad = sqrt(pow(b, 2) - (4 * a * c));
+
+	out[0] = (-b + rad) / (2 * a);
+	out[1] = (-b - rad) / (2 * a);
+}
