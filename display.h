@@ -5,11 +5,13 @@
 #include <memory>
 
 #include "world.h"
+#include "debug.h"
 
 class Display{
 public:
 	static int windowWidth, windowHeight;
 	static void resizeHandler(int sig);
+	static Debug debug;
 
 	explicit Display(World*);
 	Display(const Display&) = delete;

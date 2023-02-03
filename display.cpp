@@ -7,6 +7,7 @@
 #include "asteroid.h"
 #include "display.h"
 #include "general.h"
+#include "debug.h"
 
 Display::Display(World* world){
 	this->world = world;
@@ -14,6 +15,7 @@ Display::Display(World* world){
 
 int Display::windowWidth;
 int Display::windowHeight;
+Debug Display::debug;
 
 void Display::resizeHandler(int sig){
 	int nh, nw;
@@ -99,8 +101,10 @@ void Display::drawFrame(){
 			}
 		}
 	}
-	wmove(stdscr, 0, 0);
-	printw("Skipped: %d", skippedDraws);
+//	wmove(stdscr, 0, 0);
+//	printw("Skipped: %d", skippedDraws);
+	Display::debug.setValue("Skipped", skippedDraws);
+	Display::debug.draw();
 	wrefresh(stdscr);
 }
 
