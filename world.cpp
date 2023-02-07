@@ -116,21 +116,23 @@ void World::doCollisions(){
 					bPos[0] = t * bVelocity[0] + bPos[0];
 					bPos[1] = t * bVelocity[1] + bPos[1];
 
+					// Adjusting the velocities of the asteroids that collided
+					// I used https://ericleong.me/research/circle-circle/#dynamic-circle-circle-collision as a reference for this
+					// TODO Give the asteroids different masses and use them here
 					float aMass = 1;
 					float bMass = 1;
 
-					// TODO Need to adjust the velocities of the asteroids
 					float d = aSize + bSize;
 					float nx = (bPos[0] - aPos[0]) / d;
 					float ny = (bPos[1] - aPos[1]) / d;
 
 					float p = (2 * (aVelocity[0] * nx + aVelocity[1] * ny - bVelocity[0] * nx - bVelocity[1] * ny)) / (aMass + bMass);
 
-					//aVelocity[0] = aVelocity[0] - p * aMass * nx;
-					//aVelocity[1] = aVelocity[1] - p * aMass * ny;
+					aVelocity[0] = aVelocity[0] - p * aMass * nx;
+					aVelocity[1] = aVelocity[1] - p * aMass * ny;
 
-					//bVelocity[0] = bVelocity[0] - p * bMass * nx;
-					//bVelocity[1] = bVelocity[1] - p * bMass * ny;
+					bVelocity[0] = bVelocity[0] + p * bMass * nx;
+					bVelocity[1] = bVelocity[1] + p * bMass * ny;
 				}
 				// Might want to see how many collisions we get that have no valid intersection
 			}
