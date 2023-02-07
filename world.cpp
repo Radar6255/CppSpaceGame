@@ -79,7 +79,7 @@ void World::doCollisions(){
 	long numCollisions = 0;
 	for (unsigned long a = 0; a < this->asteroids.size(); a++){
 		// Only need to do collisions on the asteroids that haven't been checked together before
-		for (unsigned long b = a; b < this->asteroids.size(); b++){
+		for (unsigned long b = a + 1; b < this->asteroids.size(); b++){
 			if (this->asteroids[a]->checkCollision(this->asteroids[b])){
 				numCollisions++;
 				float* aPos = this->asteroids[a]->getCoords();
@@ -93,29 +93,46 @@ void World::doCollisions(){
 				float bSize = this->asteroids[b]->getBoundingSize();
 
 				// Trying to solve the problem of when the distance between the asteroids is equal to their radius'
-				float a = pow(aVelocity[0] - bVelocity[0], 2) - pow(aVelocity[1] - bVelocity[1], 2);
-				float b = 2 * ((aVelocity[0] - bVelocity[0])*(aPos[0] + bPos[0]) - (aVelocity[1] - bVelocity[1])*(aPos[1] + bPos[1]));
-				float c = pow(aPos[0] + bPos[0], 2) - pow(aPos[1] + bPos[1], 2) - pow(aSize + bSize, 2);
+				float a = pow(aVelocity[0] - bVelocity[0], 2) + pow(aVelocity[1] - bVelocity[1], 2);
+				float b = 2 * ((aVelocity[0] - bVelocity[0])*(aPos[0] - bPos[0]) + (aVelocity[1] - bVelocity[1])*(aPos[1] - bPos[1]));
+				float c = pow(aPos[0] - bPos[0], 2) + pow(aPos[1] - bPos[1], 2) - pow(aSize + bSize, 2);
+
 				float out[2];
 				general::solveSystem(a, b, c, out);
 
 				// After this we have two collision t values
 				// We need to find out which is correct in this case... Actually it should always be the smaller t value
 				float t;
-				if (!isnan(out[0]) && out[0] > out[1]){
+				if (!isnan(out[0]) && out[0] < out[1]){
 					t = out[0];
 				} else {
 					t = out[1];
 				}
-				if (!isnan(t)){
-					printf("T: %f\n", t);
 
+				if (!isnan(t)){
 					aPos[0] = t * aVelocity[0] + aPos[0];
 					aPos[1] = t * aVelocity[1] + aPos[1];
 
 					bPos[0] = t * bVelocity[0] + bPos[0];
 					bPos[1] = t * bVelocity[1] + bPos[1];
+
+					float aMass = 1;
+					float bMass = 1;
+
+					// TODO Need to adjust the velocities of the asteroids
+					float d = aSize + bSize;
+					float nx = (bPos[0] - aPos[0]) / d;
+					float ny = (bPos[1] - aPos[1]) / d;
+
+					float p = (2 * (aVelocity[0] * nx + aVelocity[1] * ny - bVelocity[0] * nx - bVelocity[1] * ny)) / (aMass + bMass);
+
+					//aVelocity[0] = aVelocity[0] - p * aMass * nx;
+					//aVelocity[1] = aVelocity[1] - p * aMass * ny;
+
+					//bVelocity[0] = bVelocity[0] - p * bMass * nx;
+					//bVelocity[1] = bVelocity[1] - p * bMass * ny;
 				}
+				// Might want to see how many collisions we get that have no valid intersection
 			}
 			//printf("Collisions: %ld", numCollisions);
 		}
