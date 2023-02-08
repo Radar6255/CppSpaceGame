@@ -13,6 +13,7 @@ public:
 	float* getVelocity();
 	float getBoundingSize();
 	float getRadius(float theta);
+	float getMass();
 
 	bool checkCollision(Asteroid* asteroid);
 
@@ -20,8 +21,9 @@ public:
 private:
 	float coords[2];
 	float velocity[2];
-
+	float density;
 	float rotation;
+
 	int seed;
 	float boundSize;
 };

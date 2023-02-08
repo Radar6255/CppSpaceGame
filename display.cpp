@@ -53,8 +53,10 @@ void Display::drawFrame(){
 	for (unsigned long i = 0; i < asteroids.size(); i++){
 		// This is the max radius of the asteroid in window coordinates
 		float boundSize = asteroids[i]->getBoundingSize();
-		float boundWidth = boundSize * (Display::windowWidth / (2 * this->curScreenDim[0]));
-		float boundHeight = boundSize * (Display::windowHeight / (2 * this->curScreenDim[1]));
+		//float boundWidth = boundSize * (Display::windowWidth / (2 * this->curScreenDim[0]));
+		//float boundHeight = boundSize * (Display::windowHeight / (2 * this->curScreenDim[1]));
+		float boundWidth = boundSize;
+		float boundHeight = boundSize;
 
 		// Need to clone the coords and translate them according to the player
 		float* absCoords = asteroids[i]->getCoords();
@@ -87,7 +89,7 @@ void Display::drawFrame(){
 			for (float y = -boundHeight; y < boundHeight; y += yCharSize){
 				int relCoords[2] = {(int) round(coords[0] + (x * (Display::windowWidth / this->curScreenDim[0]))), (int) round(coords[1] + (y * (Display::windowHeight / this->curScreenDim[1])))};
 				// First we need to check to see if the point we have is actually a part of the asteroid
-				if (sqrt(pow(x, 2) + pow(y, 2)) < asteroids[i]->getRadius(0)){
+				if (sqrt(pow(x - (xCharSize / 2), 2) + pow(y - (yCharSize / 2), 2)) < asteroids[i]->getRadius(0)){
 
 					mvaddch(relCoords[1], relCoords[0], 'X');
 				}

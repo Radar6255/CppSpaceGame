@@ -1,3 +1,6 @@
+#define _USE_MATH_DEFINES
+
+#include <math.h>
 #include <iostream>
 #include <cstdlib>
 
@@ -18,6 +21,10 @@ float Asteroid::getBoundingSize(){
 	return this->boundSize;
 }
 
+float Asteroid::getMass(){
+	return this->density * M_PI * pow(this->boundSize, 2);
+}
+
 Asteroid::Asteroid(float x, float y, float maxRadius, int seed){
 	this->coords[0] = x;
 	this->coords[1] = y;
@@ -28,6 +35,8 @@ Asteroid::Asteroid(float x, float y, float maxRadius, int seed){
 	std::srand(seed);
 	this->velocity[0] = ((float) std::rand() / RAND_MAX) * 0.03 - 0.015;
 	this->velocity[1] = ((float) std::rand() / RAND_MAX) * 0.03 - 0.015;
+
+	this->density = ((float) std::rand() / RAND_MAX) * 0.2 + 1;
 
 	this->boundSize = maxRadius;
 }

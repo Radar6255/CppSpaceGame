@@ -119,8 +119,8 @@ void World::doCollisions(){
 					// Adjusting the velocities of the asteroids that collided
 					// I used https://ericleong.me/research/circle-circle/#dynamic-circle-circle-collision as a reference for this
 					// TODO Give the asteroids different masses and use them here
-					float aMass = 1;
-					float bMass = 1;
+					float aMass = this->asteroids[a]->getMass();
+					float bMass = this->asteroids[b]->getMass();
 
 					float d = aSize + bSize;
 					float nx = (bPos[0] - aPos[0]) / d;
