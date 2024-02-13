@@ -26,7 +26,7 @@ void World::init(int numAsteroids){
 			float x = randFloat(-WORLD_W / 2, WORLD_W);
 			float y = randFloat(-WORLD_H / 2, WORLD_H);
 			float coords[2] = {x, y};
-			int radius = std::rand() % 4;
+			int radius = (std::rand() % ASTEROID_MAX_RADIUS) + 1;
 
 			bool collision = false;
 			//for(std::vector<Asteroid>::iterator asteroid = this->asteroids.begin(); asteroid != this->asteroids.end(); asteroid++){
@@ -118,7 +118,6 @@ void World::doCollisions(){
 
 					// Adjusting the velocities of the asteroids that collided
 					// I used https://ericleong.me/research/circle-circle/#dynamic-circle-circle-collision as a reference for this
-					// TODO Give the asteroids different masses and use them here
 					float aMass = this->asteroids[a]->getMass();
 					float bMass = this->asteroids[b]->getMass();
 

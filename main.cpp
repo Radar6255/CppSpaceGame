@@ -27,7 +27,7 @@ void gameLoop(Display* disp, World* world){
 
 		world->tick();
 
-		// Then we need to render a new frame... Actually we can probably get away with only doing this after an update or key press
+		// Then we need to render a new frame
 		disp->drawFrame();
 
 		// Then we need to wait for some time before displaying the next frame

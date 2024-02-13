@@ -25,6 +25,7 @@ void Ship::handleKey(int ch){
 		this->velocity[1] += offset[1];
 		break;
 	case 's':
+        // Currently this slows down the ship no matter what direction you are facing
 		curSpeed = sqrt(pow(this->velocity[0], 2) + pow(this->velocity[1], 2));
 
 		if (curSpeed < this->acceleration * 0.75){
@@ -61,6 +62,7 @@ void Ship::handleKey(int ch){
 }
 
 void Ship::tick(){
+    // Applying the velocity
 	this->coords[0] += this->velocity[0];
 	this->coords[1] += this->velocity[1];
 }

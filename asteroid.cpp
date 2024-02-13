@@ -33,10 +33,10 @@ Asteroid::Asteroid(float x, float y, float maxRadius, int seed){
 	// Going to use the seed to generate 1D perlin noise to get the shape of the asteroid at some point
 	// Should generate the array used for perlin noise in the constructor so we don't need to use the seed again
 	std::srand(seed);
-	this->velocity[0] = ((float) std::rand() / RAND_MAX) * 0.03 - 0.015;
-	this->velocity[1] = ((float) std::rand() / RAND_MAX) * 0.03 - 0.015;
+	this->velocity[0] = ((float) std::rand() / (float) RAND_MAX) * 0.03 - 0.015;
+	this->velocity[1] = ((float) std::rand() / (float) RAND_MAX) * 0.03 - 0.015;
 
-	this->density = ((float) std::rand() / RAND_MAX) * 0.2 + 1;
+	this->density = ((float) std::rand() / (float) RAND_MAX) * 0.2 + 1;
 
 	this->boundSize = maxRadius;
 }
@@ -47,8 +47,7 @@ bool Asteroid::checkCollision(Asteroid* asteroid){
 }
 
 void Asteroid::tick(){
-	// TODO Need to apply velocity here
-	//std::cout << "Test";
+    // Applying the current velocity
 	this->coords[0] = this->coords[0] + this->velocity[0];
 	this->coords[1] = this->coords[1] + this->velocity[1];
 }

@@ -8,6 +8,7 @@
 
 #define WORLD_W 20
 #define WORLD_H 20
+#define ASTEROID_MAX_RADIUS 3
 
 class World: public Updateable{
 //class World{
